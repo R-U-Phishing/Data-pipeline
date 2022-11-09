@@ -4,10 +4,12 @@ from tqdm import tqdm
 import warnings
 import time
 import requests
-
+requests.packages.urllib3.disable_warnings() 
 normal = pd.read_csv('majestic_million.csv')
-normal = normal[:2500]
+normal = normal[:100]
+
 phishing = pd.read_csv('data.csv')
+phishing = phishing[:50]
 url_list = []
 
 for i in normal["Domain"]:
@@ -30,4 +32,4 @@ for url in tqdm(df['url']):
 
 data = pd.DataFrame(data_list, df['label'])
 
-data.to_csv('c:\workspace\Data-pipeline\ml_data.csv')
+data.to_csv('/home/ec2-user/workspace/DP/Data-pipeline/ml_data.csv')

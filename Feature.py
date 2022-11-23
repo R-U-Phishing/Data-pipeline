@@ -305,10 +305,10 @@ def Age_of_Domain(url, req, tld, domain_info):
 def total_feature(url):
     data_list = []
     try:
-        req = requests.get(url, verify=False)
+        req = requests.get(url, verify=False, timeout=2)
     except:
         try:
-            req = requests.get("http://"+url, verify=False)
+            req = requests.get("http://"+url, timeout=2)
         except:
             req = -1
     

@@ -6,10 +6,10 @@ import time
 import requests
 requests.packages.urllib3.disable_warnings() 
 normal = pd.read_csv('majestic_million.csv')
-normal = normal[:100]
+normal = normal[:10000]
 
 phishing = pd.read_csv('data.csv')
-phishing = phishing[:50]
+phishing = phishing
 url_list = []
 
 for i in normal["Domain"]:
@@ -25,6 +25,7 @@ for url in tqdm(df['url']):
     try:
         data = Feature.total_feature(url)
     except Exception as e:
+        print(e)
         data = [[-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]]
     
     for list_value in data:

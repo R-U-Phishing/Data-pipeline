@@ -7,9 +7,14 @@ import time
 import pandas as pd
 s = dt()
 data = []
-phishing = pd.read_csv('online-valid.csv')
-phishing = phishing[:1000]
 
+phishing = pd.read_csv('/home/ec2-user/workspace/DP/source/online-valid.csv')
+print(len(phishing))
+healthy_data = pd.read_csv('/home/ec2-user/workspace/DP/source/data.csv')
+delete_data =pd.concat([phishing, healthy_data], axis=0)
+phishing = delete_data.drop_duplicates(['url'], keep = 'first')
+
+print(len(phishing))
 async def fetch(url):
     try:
         tld = get_tld(url, as_object=True)
@@ -45,12 +50,13 @@ loop.run_until_complete(
     )
 )
 
-
-print(data)
 phishing["status"] = data
 phishing = phishing[phishing['status'] == 200]
 phishing['label'] = -1
 data = phishing[["url", "label"]]
-data.to_csv("c:\workspace\Data-pipeline\data.csv", index=False)
+
+
+
+data.to_csv("/home/ec2-user/workspace/DP/source/data.csv", index=False)
 
 print(dt()-s)
